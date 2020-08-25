@@ -41,43 +41,40 @@
             .then (handleErrors)
             .then((resp) => resp.json())
             .then((json) => {
-             matchCounter++;
-             const commonMatches = [];
-             for (const group of json.matchGroups) {
-                 for (const cmatch of group.matches) {
-                     commonMatches.push(cmatch);
-                 }
-             }
-             let matchString = match.publicDisplayName;
-             if ((match.publicDisplayName).localeCompare(match.adminDisplayName) !== 0) {
-                 matchString += "(Managed by " + match.adminDisplayName + ")";
-             }
-             console.log(matchString + "[" + match.relationship.sharedCentimorgans + "cM] has " + commonMatches.length + " matches.");
-             for (const cmatch of commonMatches) {
-                 if (!skipList.includes(cmatch.publicDisplayName)) {
-                     let commonMatchString = cmatch.publicDisplayName;
-                     if ((cmatch.publicDisplayName).localeCompare(cmatch.adminDisplayName) !== 0) {
-                         commonMatchString += "(Managed by " + cmatch.adminDisplayName + ")";
-                     }
-                     let matchline = matchString +"," + commonMatchString + "\n";
-                     data += matchline;
-                 }
-             }
-             return true;                
+            matchCounter++;
+            const commonMatches = [];
+            for (const group of json.matchGroups) {
+                for (const cmatch of group.matches) {
+                    commonMatches.push(cmatch);
+                }
+            }
+            let matchString = match.publicDisplayName;
+            if ((match.publicDisplayName).localeCompare(match.adminDisplayName) !== 0) {
+                matchString += "(Managed by " + match.adminDisplayName + ")";
+            }
+            console.log(matchString + "[" + match.relationship.sharedCentimorgans + "cM] has " + commonMatches.length + " matches.");
+            for (const cmatch of commonMatches) {
+                if (!skipList.includes(cmatch.publicDisplayName)) {
+                    let commonMatchString = cmatch.publicDisplayName;
+                    if ((cmatch.publicDisplayName).localeCompare(cmatch.adminDisplayName) !== 0) {
+                        commonMatchString += "(Managed by " + cmatch.adminDisplayName + ")";
+                    }
+                    let matchline = matchString +"," + commonMatchString + "\n";
+                    data += matchline;
+                }
+            }
+            return true;                
             }) 
             .catch((code) => {
                 console.log("Got error " + code + "when fetching common matches for " + match.publicDisplayName + "(match # " + matchCounter + "). Retrying in a bit.");
                 matchCounter--;
                 return false;
-             });
-             
-         } else {
-             // Just silently skip this match
-             return true;
-         }
-
+            });     
+        } else {
+            // Just silently skip this match
+            return true;
+        }
     }
-
 
     async function loadPage(page, bookmarkData) {
         while (!bookmarkData || bookmarkData.moreMatchesAvailable) {
@@ -96,7 +93,6 @@
                 }
                 console.log(`Added ${matches.length} matches from page ${page} request`);
 
-                    //for (const match of matches) {
                 while (matches.length) {
                     const match = matches.shift(); // Pop match from array front
                     let processStatus = await processCommonMatches(match, page);
@@ -106,7 +102,6 @@
                         await new Promise(r => setTimeout(r, Math.floor(Math.random() * 10000) + 10000));
                     }
                 }
-
                 // Worked through this page set - now set up for new iteration
                 page += 4;
                 bookmarkData = json.bookmarkData;

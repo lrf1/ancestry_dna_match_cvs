@@ -25,7 +25,8 @@
 
         if (!bookmarkData || bookmarkData.moreMatchesAvailable) {
             $.get(`/discoveryui-matchesservice/api/samples/${accountID}/matches/list?page=${page}&minshareddna=${minSharedDna}&maxshareddna=${maxSharedDna}&sortby=RELATIONSHIP&_t=${Date.now()}${bookmarkData? `&bookmarkdata={%22moreMatchesAvailable%22:true,%22lastMatchesServicePageIdx%22:${bookmarkData.lastMatchesServicePageIdx}}`: ""}`
-            ).then((resp) => {
+            )
+            .then((resp) => {
 
                 const matches = [];
                 for (const group of resp.matchGroups) {
@@ -42,7 +43,8 @@
                         if (!skipList.includes(match.publicDisplayName)) {
                            // Get common matches for this match
                             $.get(`/discoveryui-matchesservice/api/samples/${accountID}/matches/list?page=${page}&relationguid=${match.testGuid}&sortby=RELATIONSHIP&_t=${Date.now()}`
-                            ).then((resp) => {
+                            )
+                            .then((resp) => {
                                 matchCounter++;
                                 const commonMatches = [];
                                 for (const group of resp.matchGroups) {
@@ -67,7 +69,7 @@
                                 }
                                 handleMatch(matches);
                             })
-                            .catch(() => {
+                            .fail(() => {
                                 matches.unshift(match);
                                 console.log("Got error when fetching common matches for " + match.publicDisplayName + "(match # " + matchCounter + "). Retrying in a bit.");
                                 setTimeout(() => {
@@ -83,7 +85,7 @@
                     }
                 })(matches);
             })
-            .catch(() => {
+            .fail(() => {
                 console.log("Got error when fetching new page data. Retrying in a bit");
                 setTimeout(() => {
                     loadPage(page, bookmarkData);
@@ -95,4 +97,4 @@
         }
     })(initPage,  null);
 
-})(10, 3490); // min cM, max cM
+})(200, 3490); // min cM, max cM
