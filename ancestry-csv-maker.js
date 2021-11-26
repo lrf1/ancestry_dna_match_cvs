@@ -1,7 +1,7 @@
 (async function (minSharedDna, maxSharedDna) {
     const accountID = window.location.href.replace(/\?.*/, "").split(/\//).pop();
     let initPage = 1;
-    let skipList = ["Kirsti Frøysaa", "korzen1"];
+    let skipList = ["Name One", "Name two"];
     let matchCounter = 0;
     var data = "";
 
