@@ -8,6 +8,8 @@ Script to inject into Ancestry.com DNA match page to build CSV file with matches
 - First off, I've only really tested it with Chrome (new Edge is Chrome-based and will work) and Firefox on Windows.
 - Make sure you the browser tab is on the  "DNA Matches" page - the main list.
 
+To run the script you need to load the Ancestry.com DNA matches page for the DNA kit you want to extract matches for. You don't need to scroll or do anything, the script will do the fetching against the Ancestry server itself. You will need to copy the whole script text into the browser tab command console.
+
 Basically all you need to do is press F12 or CTRL+SHIFT+i to open the developer tools. In there, somewhere at the top, is the "console" tab. Now, you copy the _complete_ script, click in the console to put focus there and paste in the script. It may look a bit crazy to put all that code in there, but it's ok. Then just press enter to run it.
 
 The script will run in the context of the Ancestry web page you have loaded and will run the requests that happen when a) you click a match, and b) click the common matches tab, and it will make a big list of all the results. When it's done, it will make a fake download event to force the browser to pop open the save dialog.
@@ -20,20 +22,20 @@ At the top of the script is a "skip list" where you can put match names you don'
 
 A little tip is to click the "Raw" button when you view the script file on Github. That will replace the fancy code page with only the file content. Then mark all the content in the tab and copy it to your text editor.
 
-So, once you have your file saved on your drive, you fire up Gephi. You do File->Start new project, then File->Import spreadsheet. Find your CSV file and click open.
+So, once you have your file saved on your drive, you fire up Gephi. You do `File->Start new project`, then `File->Import spreadsheet`. Find your CSV file and click `Open`.
 
 For the import:
-- Select "COMMA" as separator.
-- Leave the "import as" as "ajecency list".
-- Click next and then click finish.
+- Select `COMMA` as separator
+- Leave the `import as` as `ajecency list`
+- Click `Next` and then click `Finish`
 
 Next dialog:
-- Select graph type: Undirected
-- Edge merge strategy: First
-- New workspace selected
-- Click OK
+- Select graph type: `Undirected`
+- Edge merge strategy: `First`
+- `New workspace` selected
+- Click `OK`
 
-Your list will be imported. Click the "Overview" tab at the very top to see the initial graph.
+Your list will be imported. Click the `Overview` tab at the very top to see the initial graph.
 
 There is now work to be done to "massage" the data to make it look nice. This will not be described here, but there are good resources to be found elsewhere - for instance [this Youtube video](https://www.youtube.com/watch?v=Z2T_7aSL4ng).
 
