@@ -7,6 +7,7 @@ Script to inject into Ancestry.com DNA match page to build CSV file with matches
 
 - First off, I've only really tested it with Chrome (new Edge is Chrome-based and will work) and Firefox on Windows.
 - Make sure you the browser tab is on the  "DNA Matches" page - the main list.
+- Only run the script once in a given browser tab. If you need/want to run it multiple times, load the DNA list page in a new tab and paste the script into that the new tab. Faking the file download event seems to cause some issues when rerunning the script in the same tab context
 
 To run the script you need to load the Ancestry.com DNA matches page for the DNA kit you want to extract matches for. You don't need to scroll or do anything, the script will do the fetching against the Ancestry server itself. You will need to copy the whole script text into the browser tab command console.
 
